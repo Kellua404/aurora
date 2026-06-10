@@ -1,16 +1,31 @@
-# React + Vite
+# Aurora
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Generative 'synthetic skies' — a real-time WebGL shader, not CSS gradients. React + GLSL + Zustand.
 
-Currently, two official plugins are available:
+**[Live demo](https://aurora-liart-three.vercel.app)** · part of [my portfolio](https://portfolio-delta-snowy-rw5w2y5pf8.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Aurora](docs/poster.jpg)
 
-## React Compiler
+## What it is
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+A generative sky machine: an animated, fully parameterized aurora rendered by a fragment shader in real time. The differentiator is that it's a *real* shader — layered simplex noise computed per-pixel on the GPU — where most "aurora" sites fake it with blurred CSS gradients.
 
-## Expanding the ESLint configuration
+## How it works
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- The sky is one fragment shader (`src/gl/shaders.js`): Ashima 2D simplex noise stacked into fBM with a runtime-tunable octave count (`u_octaves`), driving color through a procedural palette.
+- The control panel is wired straight to shader uniforms — a Zustand store (`useAuroraStore`) holds the parameters and `useAuroraGL` pushes them to the GPU every frame, so every slider edit is live at render speed.
+- Export goes both ways: a PNG snapshot of the actual canvas (`canvas.toBlob`), and a `generateCss()` function that approximates the current sky as stacked CSS `radial-gradient`s you can paste into any stylesheet.
+- No Three.js — raw WebGL with a small GL utility layer, because a fullscreen quad and one shader don't need a scene graph.
+
+## Stack
+
+`React` · `WebGL/GLSL` · `Zustand` · `Vite`
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+No environment variables needed.
