@@ -2,7 +2,7 @@
 
 > Generative 'synthetic skies' — a real-time WebGL shader, not CSS gradients. React + GLSL + Zustand.
 
-**[Live demo](https://aurora-liart-three.vercel.app)** · part of [my portfolio](https://portfolio-delta-snowy-rw5w2y5pf8.vercel.app)
+**[Live demo](https://aurora.ayoubalkak.com)** · part of [my portfolio](https://ayoubalkak.com)
 
 ![Aurora](docs/poster.jpg)
 
